@@ -1,0 +1,7 @@
+Ex.mo CustoJusto
+
+Como estudantes do Curso de Programação de Sistemas de Informação, do 2ºano de TESP da escola de ESTG estamos a produzir um projecto que irá ajudar aos estudantes de todo o pais a encontrar quartos mais facilmente.
+Para tal feito gostariamos que se fosse possivel disponibilizar-nos a vossa API cara fins academicos.
+Caso a vossa API seja-nos disponibilizada iremos colocar-vos como Referencia no rodapé da página web e na App Android.
+
+Com os melhores comprimentos
