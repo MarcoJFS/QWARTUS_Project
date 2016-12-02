@@ -9,9 +9,8 @@ DROP TABLE IF EXISTS registado;
 DROP TABLE IF EXISTS administrador;
 DROP TABLE IF EXISTS anuncio;
 DROP TABLE IF EXISTS imagem;
-
-
-
+DROP TABLE IF EXISTS distritos;
+DROP TABLE IF EXISTS concelhos;
 
 CREATE TABLE utilizador(
 	id_utilizador					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
