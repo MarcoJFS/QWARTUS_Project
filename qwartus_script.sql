@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS imagem;
 DROP TABLE IF EXISTS concelhos;
 DROP TABLE IF EXISTS distritos;
 
+DROP view IF EXISTS anuncios;
+
 
 
 CREATE TABLE user(
@@ -59,6 +61,10 @@ CREATE TABLE anuncio(
 		ON UPDATE CASCADE
 );
 
+insert into anuncio(preco,descricao,distrito,concelho) values(21,'asdadvahdvadasdvajsghdvasdvashjd','Aveiro','Águeda');
+insert into anuncio(preco,descricao,distrito,concelho) values(22,'asdadvahdvadasdvajsghdvasdvashjd','Beja','Aljustrel');
+insert into anuncio(preco,descricao,distrito,concelho) values(23,'asdadvahdvadasdvajsghdvasdvashjd','Beja','Aljustrel');
+
 CREATE TABLE imagem(
 	id_imagem						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
     ce_id_anuncio					SMALLINT,
@@ -67,6 +73,11 @@ CREATE TABLE imagem(
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
+
+insert into imagem(ce_id_anuncio,caminho) values(1,'/ProjWeb/frontend/web/css/images/img.jpg');
+insert into imagem(ce_id_anuncio,caminho) values(1,'/ProjWeb/frontend/web/css/images/img2.png');
+insert into imagem(ce_id_anuncio,caminho) values(2,'/ProjWeb/frontend/web/css/images/qwartus.png');
+insert into imagem(ce_id_anuncio,caminho) values(3,'/ProjWeb/frontend/web/css/images/imgBack.jpg');
 
 CREATE TABLE distritos(
 	id_distritos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
@@ -416,3 +427,10 @@ INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Tondela", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vila Nova de Paiva", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Viseu", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vouzela", 18);
+
+create view anuncios as
+	select *
+	from anuncio
+	join imagem
+	on anuncio.id_anuncio=imagem.ce_id_anuncio
+	group by anuncio.id_anuncio
