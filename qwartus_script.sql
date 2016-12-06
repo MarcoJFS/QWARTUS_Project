@@ -437,7 +437,6 @@ insert into imagem(ce_id_anuncio,caminho) values(3,'../web/css/images/imgBack.jp
 
 create view anuncios as
 	select *
-	from anuncio
-	join imagem
-	on anuncio.id_anuncio=imagem.ce_id_anuncio
+	from anuncio join distritos join concelhos join imagem
+	where distritos.id_distritos=concelhos.ce_id_distritos and distritos.id_distritos=anuncio.id_distrito and anuncio.id_anuncio=imagem.ce_id_anuncio
 	group by anuncio.id_anuncio
