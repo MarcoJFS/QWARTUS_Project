@@ -49,21 +49,38 @@ CREATE TABLE registado(
 		ON UPDATE CASCADE
 );
 
+CREATE TABLE distritos(
+	id_distritos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
+    nome_distritos					VARCHAR(20)
+);
+
+CREATE TABLE concelhos(
+	id_concelhos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
+    nome_concelhos					VARCHAR(20),
+    ce_id_distritos					SMALLINT,
+    FOREIGN KEY(ce_id_distritos)	REFERENCES distritos(id_distritos)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
 CREATE TABLE anuncio(
 	id_anuncio						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    ce_id_registado					SMALLINT,		
+    ce_id_registado					SMALLINT,
+    asunto							varchar(255),
     preco							NUMERIC,
     descricao						TEXT,
-    distrito						VARCHAR(20),
-    concelho						VARCHAR(20),
+    id_distrito						SMALLINT,
+    id_concelho						SMALLINT,
     FOREIGN KEY(ce_id_registado)	REFERENCES registado(id_registado)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+    FOREIGN KEY(id_distrito)	REFERENCES distritos(id_distritos)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+    FOREIGN KEY(id_concelho)	REFERENCES concelhos(id_concelhos)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
-
-insert into anuncio(preco,descricao,distrito,concelho) values(21,'asdadvahdvadasdvajsghdvasdvashjd','Aveiro','Águeda');
-insert into anuncio(preco,descricao,distrito,concelho) values(22,'asdadvahdvadasdvajsghdvasdvashjd','Beja','Aljustrel');
-insert into anuncio(preco,descricao,distrito,concelho) values(23,'asdadvahdvadasdvajsghdvasdvashjd','Beja','Aljustrel');
 
 CREATE TABLE imagem(
 	id_imagem						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
@@ -73,27 +90,6 @@ CREATE TABLE imagem(
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
-
-insert into imagem(ce_id_anuncio,caminho) values(1,'/ProjWeb/frontend/web/css/images/img.jpg');
-insert into imagem(ce_id_anuncio,caminho) values(1,'/ProjWeb/frontend/web/css/images/img2.png');
-insert into imagem(ce_id_anuncio,caminho) values(2,'/ProjWeb/frontend/web/css/images/qwartus.png');
-insert into imagem(ce_id_anuncio,caminho) values(3,'/ProjWeb/frontend/web/css/images/imgBack.jpg');
-
-CREATE TABLE distritos(
-	id_distritos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    nome_distritos					VARCHAR(20)
-);
-
-CREATE TABLE concelhos(
-	id_concelhoss					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    nome_concelhos					VARCHAR(20),
-    ce_id_distritos					SMALLINT,
-    FOREIGN KEY(ce_id_distritos)	REFERENCES distritos(id_distritos)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-
 
 /*Distritos inseridos */
 INSERT INTO distritos (nome_distritos) VALUES("Aveiro");
@@ -427,6 +423,17 @@ INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Tondela", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vila Nova de Paiva", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Viseu", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vouzela", 18);
+
+/*anuncios inseridos */
+insert into anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T1',21,'asdadvahdvadasdvajsghdvasdvashjd',1,1);
+insert into anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T2',22,'asdadvahdvadasdvajsghdvasdvashjd',2,1);
+insert into anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T3',23,'asdadvahdvadasdvajsghdvasdvashjd',2,1);
+
+/*imagens dos anuncios inseridos */
+insert into imagem(ce_id_anuncio,caminho) values(1,'../web/css/images/img.jpg');
+insert into imagem(ce_id_anuncio,caminho) values(1,'../web/css/images/img2.png');
+insert into imagem(ce_id_anuncio,caminho) values(2,'../web/css/images/qwartus.png');
+insert into imagem(ce_id_anuncio,caminho) values(3,'../web/css/images/imgBack.jpg');
 
 create view anuncios as
 	select *
