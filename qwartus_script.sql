@@ -11,22 +11,24 @@ DROP TABLE IF EXISTS anuncio;
 DROP TABLE IF EXISTS imagem;
 DROP TABLE IF EXISTS concelhos;
 DROP TABLE IF EXISTS distritos;
+DROP TABLE IF EXISTS session;
 
-DROP view IF EXISTS anuncios;
+DROP VIEW IF EXISTS anuncios;
 
 
 
 CREATE TABLE user(
 	id						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    username				varchar(255)	not null	UNIQUE,
-    auth_key				varchar(32)		not null,
-    password_hash			varchar(255)	not null,
-    password_reset_token	varchar(255)	unique,
-    email					varchar(255)	not null	unique,
+    username				VARCHAR(255)	NOT NULL	UNIQUE,
+    auth_key				VARCHAR(32)		NOT NULL,
+    password_hash			VARCHAR(255)	NOT NULL,
+    password_reset_token	VARCHAR(255)	UNIQUE,
+    email					VARCHAR(255)	NOT NULL	UNIQUE,
     
-    status					smallint		not null	default 10,
-    created_at				int 			not null,
-    updated_at				int				not null,
+    status					SMALLINT		NOT NULL
+	default 10,
+    created_at				INT 			NOT NULL,
+    updated_at				INT				NOT NULL,
     
     primeiro_nome			VARCHAR(20),
     ultimo_nome				VARCHAR(20),
@@ -51,7 +53,7 @@ CREATE TABLE registado(
 
 CREATE TABLE distritos(
 	id_distritos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    nome_distritos					VARCHAR(20)
+    nome_distritos					VARCHAR(20)		NOT NULL
 );
 
 CREATE TABLE concelhos(
@@ -87,6 +89,17 @@ CREATE TABLE imagem(
     ce_id_anuncio					SMALLINT,
     caminho							TEXT,
     FOREIGN KEY(ce_id_anuncio)		REFERENCES anuncio(id_anuncio)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE session(
+	id								SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
+    accessToken						VARCHAR(255),
+    creationDate					DATETIME		NOT NULL,
+    valid							INT,
+    userId							SMALLINT,
+    FOREIGN KEY(userId)				REFERENCES user(id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -424,8 +437,19 @@ INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vila Nova de Pai
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Viseu", 18);
 INSERT INTO concelhos (nome_concelhos, ce_id_distritos) VALUES("Vouzela", 18);
 
-create view anuncios as
-	select *
-	from anuncio join distritos join concelhos join imagem
-	where distritos.id_distritos=concelhos.ce_id_distritos and distritos.id_distritos=anuncio.id_distrito and anuncio.id_anuncio=imagem.ce_id_anuncio
-	group by anuncio.id_anuncio
+/*anuncios inseridos */
+INSERT INTO anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T1',21,'asdadvahdvadasdvajsghdvasdvashjd',1,1);
+INSERT INTO anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T2',22,'asdadvahdvadasdvajsghdvasdvashjd',2,1);
+INSERT INTO anuncio(asunto,preco,descricao,id_distrito,id_concelho) values('T3',23,'asdadvahdvadasdvajsghdvasdvashjd',2,1);
+
+/*imagens dos anuncios inseridos */
+INSERT INTO imagem(ce_id_anuncio,caminho) values(1,'../web/css/images/img.jpg');
+INSERT INTO imagem(ce_id_anuncio,caminho) values(1,'../web/css/images/img2.png');
+INSERT INTO imagem(ce_id_anuncio,caminho) values(2,'../web/css/images/qwartus.png');
+INSERT INTO imagem(ce_id_anuncio,caminho) values(3,'../web/css/images/imgBack.jpg');
+
+CREATE VIEW anuncios AS
+	SELECT *
+	FROM anuncio JOIN distritos JOIN concelhos JOIN imagem
+	WHERE distritos.id_distritos=concelhos.ce_id_distritos AND distritos.id_distritos=anuncio.id_distrito AND anuncio.id_anuncio=imagem.ce_id_anuncio
+	GROUP BY anuncio.id_anuncio
