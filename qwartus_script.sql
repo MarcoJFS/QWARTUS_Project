@@ -20,15 +20,15 @@ DROP VIEW IF EXISTS anuncios;
 CREATE TABLE user(
 	id						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
     username				VARCHAR(255)	NOT NULL	UNIQUE,
-    auth_key				VARCHAR(32)		NOT NULL,
-    password_hash			VARCHAR(255)	NOT NULL,
+    auth_key				VARCHAR(32),
+    password_hash			VARCHAR(255),
     password_reset_token	VARCHAR(255)	UNIQUE,
     email					VARCHAR(255)	NOT NULL	UNIQUE,
     
     status					SMALLINT		NOT NULL
 	default 10,
-    created_at				INT 			NOT NULL,
-    updated_at				INT				NOT NULL,
+    created_at				INT,
+    updated_at				INT,
     
     primeiro_nome			VARCHAR(20),
     ultimo_nome				VARCHAR(20),
