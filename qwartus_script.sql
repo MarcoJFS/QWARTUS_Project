@@ -35,22 +35,6 @@ CREATE TABLE user(
     contacto				INT(9)
 );
 
-CREATE TABLE administrador(
-	id_administrador				SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    ce_id_utilizador				SMALLINT,
-    FOREIGN KEY(ce_id_utilizador)	REFERENCES user(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE registado(
-	id_registado					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    ce_id_utilizador				SMALLINT,
-    FOREIGN KEY(ce_id_utilizador)	REFERENCES user(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
 CREATE TABLE distritos(
 	id_distritos					SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
     nome_distritos					VARCHAR(20)		NOT NULL
@@ -67,13 +51,13 @@ CREATE TABLE concelhos(
 
 CREATE TABLE anuncio(
 	id_anuncio						SMALLINT		NOT NULL	AUTO_INCREMENT		PRIMARY KEY,
-    ce_id_registado					SMALLINT,
+    ce_id_user						SMALLINT,
     asunto							varchar(255),
     preco							NUMERIC,
     descricao						TEXT,
     id_distrito						SMALLINT,
     id_concelho						SMALLINT,
-    FOREIGN KEY(ce_id_registado)	REFERENCES registado(id_registado)
+    FOREIGN KEY(ce_id_user)	REFERENCES user(id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
     FOREIGN KEY(id_distrito)	REFERENCES distritos(id_distritos)
