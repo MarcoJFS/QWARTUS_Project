@@ -55,6 +55,7 @@ CREATE TABLE anuncio(
     n_pessoas						integer,
     preco							NUMERIC,
     descricao						TEXT,
+    cordenadas						TEXT,
     imagem0							longblob,
     imagem1							longblob,
     imagem2							longblob,
